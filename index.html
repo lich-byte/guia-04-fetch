@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de publicaciones</title>
+    <style>
+        body { font-family: Arial; max-width: 700px; margin: 2rem auto; } /* Un poco más ancho */
+        form { display: grid; gap: .5rem; margin-bottom: 1rem; }
+        .post { border: 1px solid #ddd; border-radius: 6px;
+                padding: 0 1rem; margin: .5rem 0; cursor: pointer; }
+        .post:hover { background-color: #f9f9f9; } /* Efecto al pasar el mouse */
+        .nuevo { border-color: seagreen; background: #f0fff4; }
+        .error { color: crimson; }
+        
+        /* --- ESTILOS PARA LA ACTIVIDAD 2 --- */
+        .comentarios { margin: .5rem 0 1rem 1rem; padding-left: 1rem; 
+                       border-left: 3px solid #ccc; font-size: .9rem; background: #fafafa; }
+        .comentarios h4 { margin: .3rem 0; color: #333; }
+        /* ------------------------------------------ */
+                /* Estilos para ordenar el formulario de comentarios */
+        fieldset {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        legend {
+            font-weight: bold;
+            padding: 0 0.5rem;
+        }
+        .campo {
+            display: flex;
+            flex-direction: column; /* Pone la etiqueta arriba y el input abajo */
+            margin-bottom: 0.8rem;
+        }
+        .campo label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+            color: #333;
+        }
+        .campo input, .campo textarea {
+            padding: 0.5rem;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestor de publicaciones</h1>
+
+    <!-- ACTIVIDAD 1: FORMULARIO GET  -->
+    <h2>Prueba de formulario GET</h2>
+    <form action="index.html" method="get">
+        <label>Nombre:<input type="text" name="nombre" placeholder="Ej: Ana"></label>
+        <label>Ciudad:<input type="text" name="ciudad" placeholder="Ej: Lima"></label>
+        <button type="submit">Enviar por GET</button>
+    </form>
+    <!-- Aquí mostraremos los datos de la URL -->
+    <div id="resultado-get" style="margin-bottom: 2rem; padding: 1rem; background: #f0fff4; border: 1px solid seagreen;">
+        Aún no se han enviado datos.
+    </div>
+    <!-- ===== -->
+
+    <!-- ACTIVIDAD 2: FORMULARIO GET AMPLIADO       -->
+    <h2>Listar (GET)</h2>
+    <form id="form-buscar">
+        <label>Usuario (1 a 10)
+            <input type="number" id="input-usuario" min="1" max="10" value="1">
+        </label>
+        
+        <!-- Campo: Búsqueda por texto -->
+        <label>Buscar por título
+            <input type="text" id="input-buscar" placeholder="Escribe para filtrar...">
+        </label>
+
+        <!-- Campo: Selector de cantidad -->
+        <label>Cantidad de publicaciones
+            <select id="select-limit">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+            </select>
+        </label>
+
+        <button type="submit">Listar publicaciones</button>
+    </form>
+
+    <h2>Nueva publicación (POST)</h2>
+    <form id="form-crear">
+        <input type="text" id="input-titulo" placeholder="Título (mín. 5 caracteres)" required>
+        <textarea id="input-cuerpo" rows="3" placeholder="Contenido" required></textarea>
+        <!-- Contenedor para mostrar errores de validación -->
+        <p id="error-crear" class="error"></p> 
+        <button type="submit" id="btn-crear">Publicar</button>
+    </form>
+
+    <!-- ACTIVIDAD 3: FORMULARIO PARA COMENTAR      -->
+    <h2>Nuevo comentario (POST con FormData)</h2>
+    <form id="form-comentar">
+        <fieldset>
+            <legend>Datos del comentario</legend>
+            
+            <div class="campo">
+                <label>postId</label>
+                <input type="number" name="postId" min="1" value="1" required>
+            </div>
+            
+            <div class="campo">
+                <label>Nombre</label>
+                <input type="text" name="name" placeholder="Tu nombre" required>
+            </div>
+            
+            <div class="campo">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="tu@mail.com" required>
+            </div>
+            
+            <div class="campo">
+                <label>Cuerpo</label>
+                <textarea name="body" rows="3" placeholder="Escribe tu comentario" required></textarea>
+            </div>
+
+        </fieldset>
+        <p id="estado-comentar"></p>
+        <button type="submit" id="btn-comentar">Enviar comentario</button>
+    </form>
+
+    <p id="estado"></p>
+    <section id="lista"></section>
+
+    <script src="app.js"></script>
+</body>
+</html>
